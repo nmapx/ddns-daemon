@@ -1,0 +1,16 @@
+services:
+  app:
+    env_file: .env
+    tty: true
+    stdin_open: true
+    command: "loop"
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile
+      args:
+        HOST_UID: ${HOST_UID}
+        CGO_ENABLED: ${CGO_ENABLED}
+        GOARCH: ${GOARCH}
+        GOOS: ${GOOS}
+    volumes:
+      - ./:/go/src/github.com/nmapx/ddns-daemon

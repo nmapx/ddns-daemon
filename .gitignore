@@ -1,0 +1,6 @@
+.idea/
+
+.env
+ddns-daemon
+*.exe
+config.yml
