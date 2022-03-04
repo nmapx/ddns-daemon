@@ -29,7 +29,7 @@ hosts:
 
 ### Production
 
-1. Download [latest](./releases/tag/latest) executable
+1. Download [latest](/nmapx/ddns-daemon/releases/latest) executable
 2. Prepare yaml config file
 3. Configure the daemon (eg. service) or run it manually (eg. screen)
 

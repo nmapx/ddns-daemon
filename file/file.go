@@ -1,11 +1,11 @@
 package file
 
 import (
-	elog "github.com/labstack/gommon/log"
 	"io/ioutil"
 	"os"
 )
 
+//Exists check if file exists
 func Exists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {
@@ -15,26 +15,11 @@ func Exists(name string) bool {
 	return true
 }
 
-func Write(path string, data []byte) bool {
-	if err := ioutil.WriteFile(path, data, 0600); err != nil {
-		elog.Errorf("%v", err.Error())
-		return false
-	}
-	return true
-}
-
+//Read filepath
 func Read(path string) []byte {
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil
 	}
 	return content
-}
-
-func Delete(path string) bool {
-	if err := os.Remove(path); err != nil {
-		elog.Errorf("%v", err.Error())
-		return false
-	}
-	return true
 }

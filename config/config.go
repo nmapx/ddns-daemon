@@ -7,16 +7,19 @@ import (
 	"os"
 )
 
+//Config struct
 type Config struct {
 	Hosts map[string]HostConfig `yaml:"hosts"`
 }
 
+// HostConfig struct
 type HostConfig struct {
 	Host string `yaml:"host"`
 	User string `yaml:"user"`
 	Pass string `yaml:"pass"`
 }
 
+// Load config file
 func (c *Config) Load(filepath string) {
 	if !file.Exists(filepath) {
 		elog.Errorf("Config file does not exist")

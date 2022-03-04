@@ -22,7 +22,7 @@ var daemonCmd = &cobra.Command{
 	Long: `It's fetching your IP address from https://ifconfig.co API
 then updating all your OVH DynHost hosts based on the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		HandleSignals()
+		handleSignals()
 
 		elog.Infof("Loading config")
 

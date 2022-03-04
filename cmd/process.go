@@ -7,7 +7,7 @@ import (
 	"syscall"
 )
 
-func HandleSignals() {
+func handleSignals() {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
