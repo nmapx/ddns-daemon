@@ -4,7 +4,7 @@ OVH DynHost self-hosted daemon. Multiple hosts supported!
 
 ## How it works
 
-It's fetching your IP address from https://ifconfig.co API then updating all your OVH 
+It's fetching your IP address from [ifconfig.co](https://ifconfig.co) API then updating all your OVH 
 DynHost hosts based on the configuration file.
 
 ## Config
@@ -31,7 +31,31 @@ hosts:
 
 1. Download [latest](https://github.com/nmapx/ddns-daemon/releases/latest) executable
 2. Prepare yaml config file
-3. Configure the daemon (eg. service) or run it manually (eg. screen)
+3. Configure the daemon (eg. service - sample config below) or run it manually (eg. screen)
+
+#### Ubuntu (system.d service)
+
+```
+# /etc/systemd/system/ddns-daemon.service
+
+[Unit]
+Description=DDNS daemon
+
+[Service]
+ExecStart=/usr/local/bin/ddns-daemon daemon --config-filepath=/etc/ddns-daemon/config.yml
+User=user
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+# reload daemon and check service status
+systemctl daemon-reload
+service ddns-daemon status
+```
 
 ### Development
 
