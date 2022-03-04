@@ -1,4 +1,4 @@
-# DDNS Daemon
+# DDNS Daemon ![GitHub](https://img.shields.io/github/license/nmapx/ddns-daemon?style=flat) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/nmapx/ddns-daemon?style=flat) [![Go Report Card](https://goreportcard.com/badge/github.com/nmapx/ddns-daemon)](https://goreportcard.com/report/github.com/nmapx/ddns-daemon)
 
 OVH DynHost self-hosted daemon. Multiple hosts supported!
 
@@ -10,7 +10,7 @@ DynHost hosts based on the configuration file.
 ## Config
 
 By default `config.yml` is expected to be in the same directory but you can customize
-it with `--config` parameter.
+it with `--config-filepath` param.
 
 ```yaml
 hosts:
@@ -29,20 +29,20 @@ hosts:
 
 ### Production
 
-1. Download latest binary
-2. Prepare config file
-3. Configure the daemon (service) or run it manually (screen)
+1. Download [latest](./releases/tag/latest) executable
+2. Prepare yaml config file
+3. Configure the daemon (eg. service) or run it manually (eg. screen)
 
 ### Development
 
 Run it with or without Docker.
 
 1. Clone the repository
-2. Create .env file based on .env.dist
-3. Prepare test config file
+2. Create `.env` file based on `.env.dist`
+3. Prepare yaml config file
 4. Build docker image and run Golang environment
 5. Contribute, build binary, run daemon
 
 ## License
 
-MIT
+[MIT License](./LICENSE)

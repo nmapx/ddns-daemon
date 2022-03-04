@@ -10,6 +10,12 @@ test:
 build: ./main.go
 	exec go build -a -o ddns-daemon .
 
+.PHONY: release
+release: ./main.go
+	GOOS=linux exec go build -a -o ddns-daemon_amd64_linux
+	GOOS=windows exec go build -a -o ddns-daemon_amd64_windows
+	GOOS=darwin exec go build -a -o ddns-daemon_amd64_darwin
+
 .PHONY: get
 get:
 	exec go get

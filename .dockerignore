@@ -3,6 +3,5 @@
 .idea/
 
 .env
-ddns-daemon
-*.exe
+ddns-daemon*
 config.yml

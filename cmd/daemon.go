@@ -10,12 +10,17 @@ import (
 	"time"
 )
 
-var configFilepath string
+var (
+	configFilepath string
+	sleepError     int
+	sleepSuccess   int
+)
 
 var daemonCmd = &cobra.Command{
 	Use:   "daemon",
-	Short: "",
-	Long:  ``,
+	Short: "Background process",
+	Long: `It's fetching your IP address from https://ifconfig.co API
+then updating all your OVH DynHost hosts based on the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		HandleSignals()
 
@@ -33,7 +38,9 @@ var daemonCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(daemonCmd)
 
-	daemonCmd.PersistentFlags().StringVar(&configFilepath, "config", "./config.yml", "Config filepath [yml]")
+	daemonCmd.PersistentFlags().StringVar(&configFilepath, "config-filepath", "./config.yml", "Config filepath [yaml]")
+	daemonCmd.PersistentFlags().IntVar(&sleepError, "sleep-error", 1, "Sleep after error [minutes]")
+	daemonCmd.PersistentFlags().IntVar(&sleepSuccess, "sleep-success", 5, "Sleep after success [minutes]")
 }
 
 func script(config *config2.Config) {
@@ -44,7 +51,7 @@ func script(config *config2.Config) {
 		ifConfigResponse, err := ifconfig.Inst.Fetch(context.Background())
 		if err != nil {
 			elog.Errorf("Problem with ifconfig request: %v", err)
-			time.Sleep(time.Minute)
+			time.Sleep(time.Minute * time.Duration(sleepError))
 			continue
 		}
 
@@ -55,32 +62,32 @@ func script(config *config2.Config) {
 			for _, host := range config.Hosts {
 				if err := hostProcess(context.Background(), host, ifConfigResponse.Ip); err != nil {
 					elog.Error(err)
-					time.Sleep(time.Minute)
+					time.Sleep(time.Minute * time.Duration(sleepError))
 					continue
 				}
 			}
 			prevIp = ifConfigResponse.Ip
 			elog.Infof("Sleeping")
-			time.Sleep(time.Minute * 5)
+			time.Sleep(time.Minute * time.Duration(sleepSuccess))
 			continue
 		}
 
 		if prevIp == ifConfigResponse.Ip {
 			elog.Infof("No change, skipping")
-			time.Sleep(time.Minute * 5)
+			time.Sleep(time.Minute * time.Duration(sleepSuccess))
 			continue
 		}
 
 		for _, host := range config.Hosts {
 			if err := hostProcess(context.Background(), host, ifConfigResponse.Ip); err != nil {
 				elog.Error(err)
-				time.Sleep(time.Minute)
+				time.Sleep(time.Minute * time.Duration(sleepError))
 				continue
 			}
 		}
 		prevIp = ifConfigResponse.Ip
 		elog.Infof("Sleeping")
-		time.Sleep(time.Minute * 5)
+		time.Sleep(time.Minute * time.Duration(sleepSuccess))
 	}
 }
 

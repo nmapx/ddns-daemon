@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"os"
-
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"os"
 )
 
 var cfgFile string
@@ -14,7 +13,7 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "ddns-daemon",
-	Short: "",
+	Short: "OVH DynHost DDNS self-hosted daemon",
 	Long:  `Check README for more details!`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
