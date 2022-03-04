@@ -8,13 +8,18 @@ import (
 	"os"
 )
 
-var cfgFile string
+var (
+	cfgFile string
+	version string
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "ddns-daemon",
-	Short: "OVH DynHost DDNS self-hosted daemon",
-	Long:  `Check README for more details!`,
+	Short: "",
+	Long: fmt.Sprintf(`OVH DynHost DDNS self-hosted daemon.
+Version: %s
+Check README for more details!`, version),
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },

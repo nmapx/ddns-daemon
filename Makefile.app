@@ -12,9 +12,9 @@ build: ./main.go
 
 .PHONY: release
 release: ./main.go
-	GOOS=linux exec go build -a -o ddns-daemon_amd64_linux
-	GOOS=windows exec go build -a -o ddns-daemon_amd64_windows
-	GOOS=darwin exec go build -a -o ddns-daemon_amd64_darwin
+	GOOS=linux exec go build -a -o ddns-daemon_amd64_linux -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
+	GOOS=windows exec go build -a -o ddns-daemon_amd64_windows -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
+	GOOS=darwin exec go build -a -o ddns-daemon_amd64_darwin -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
 
 .PHONY: get
 get:
