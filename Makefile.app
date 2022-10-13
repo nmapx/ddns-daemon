@@ -1,3 +1,5 @@
+OS_LIST := linux windows darwin
+
 .PHONY: daemon
 daemon: ./main.go
 	exec go run . daemon
@@ -12,9 +14,9 @@ build: ./main.go
 
 .PHONY: release
 release: ./main.go
-	GOOS=linux exec go build -a -o ddns-daemon_amd64_linux -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
-	GOOS=windows exec go build -a -o ddns-daemon_amd64_windows -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
-	GOOS=darwin exec go build -a -o ddns-daemon_amd64_darwin -ldflags="-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'"
+	for os in $(OS_LIST); do \
+		bash -c "GOOS=$$os exec go build -a -o ddns-daemon_amd64_$$os -ldflags=\"-X 'github.com/nmapx/ddns-daemon/cmd.version=$(VERSION)'\""; \
+	done
 
 .PHONY: get
 get:

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/go-resty/resty/v2"
 	elog "github.com/labstack/gommon/log"
+	"github.com/thanhpk/randstr"
 )
 
 //Ifconfig struct
@@ -32,6 +33,7 @@ func (i *Ifconfig) Fetch(ctx context.Context) (response *Response, error error) 
 	_, err := Inst.Client.R().
 		SetContext(ctx).
 		SetResult(&response).
+		SetHeader("User-Agent", randstr.String(50)).
 		Get("")
 
 	if err != nil {
